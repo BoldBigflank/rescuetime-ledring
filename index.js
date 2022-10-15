@@ -1,7 +1,8 @@
-if (process.env.NODE_ENV !== "production") {
-    require("dotenv").config();
-}
-const fetch = require('cross-fetch')
+import * as dotenv from 'dotenv'
+dotenv.config()
+
+import chalk from 'chalk'
+import fetch from 'cross-fetch'
 
 const DEBUG = process.env.DEBUG
 const PARTICLE_ACCESS_TOKEN = process.env.PARTICLE_ACCESS_TOKEN
@@ -15,7 +16,6 @@ const main = async () => {
     // Form a string of lights
     const colorString = getColorString(productivity.rows)
     // Send it to Particle
-    if (DEBUG) console.log('colorString', colorString)
     await updateColors(colorString)
 }
 
@@ -45,7 +45,7 @@ const getRTFeed = async () => {
     }
     const qs = new URLSearchParams(rtQuery)
     const rtUrl = `https://www.rescuetime.com/anapi/data?${qs.toString()}`
-
+    
     const response = await fetch(rtUrl)
     const json = await response.json()
     return json
@@ -83,6 +83,16 @@ const getColorString = (productivity) => {
 }
 
 const updateColors = async (colorString) => {
+    if (DEBUG) {
+        // Show a log of it
+        let lightString = ''
+        for (let i = 0; i < colorString.length; i = i + 6) {
+            const colorUnit = `#${colorString.substring(i, i + 6)}`
+            const unitColor = chalk.hex(colorUnit)
+            lightString += unitColor('⬤ ')
+        }
+        console.log(lightString)
+    }
     const particleUrl = 'https://api.particle.io/v1/devices/3b003b000747343232363230/colors'
     const response = await fetch(particleUrl, {
         method: 'POST',
