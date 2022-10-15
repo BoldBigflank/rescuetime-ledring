@@ -1,0 +1,3 @@
+I made this device to display my productivity over the last 60 minutes using [RescueTime](https://www.rescuetime.com), an IoT device built with [Particle](https://particle.io) and [NeoPixel](https://www.adafruit.com/category/168), and a [Raspberry Pi](https://raspberrypi.org). I like how this turns my productivity into a little game, so I'm motivated to try to turn all the lights blue and keep it going.
+
+See full details on my [blog](https://alexswan.dev/posts/rescuetime-particle-report).
